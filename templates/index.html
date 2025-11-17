@@ -6,61 +6,114 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #111;
-            color: #fff;
+            background: #000 url("https://cdn.pixabay.com/photo/2018/02/02/22/30/bitcoin-3125488_1280.jpg") no-repeat center center fixed;
+            background-size: cover;
             margin: 0;
-            padding: 30px;
+            padding: 40px 10px;
+            color: #fff;
         }
-        h1 { color: #4ad3ff; }
-        .upload-box {
-            padding: 20px;
-            background: #222;
-            border-radius: 10px;
-            margin-bottom: 40px;
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.68);
+            padding: 25px 30px;
+            border-radius: 14px;
+            box-shadow: 0 0 18px rgba(0, 0, 0, 0.7);
+        }
+        h1 {
+            margin-top: 0;
+            color: #ffd15c;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        input[type="password"],
+        input[type="file"] {
+            margin-top: 5px;
+            width: 100%;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #ffb400;
+            color: #000;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #ffc94d;
+        }
+        .messages {
+            margin-bottom: 10px;
+        }
+        .messages p {
+            margin: 4px 0;
+            font-size: 14px;
         }
         .file-list {
-            background: #222;
-            padding: 20px;
-            border-radius: 10px;
+            margin-top: 25px;
+        }
+        .file-item {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px 10px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 14px;
         }
         a {
-            color: #4ad3ff;
+            color: #4fd3ff;
             text-decoration: none;
         }
-        a:hover { text-decoration: underline; }
-        .file-item {
-            margin: 10px 0;
-            padding: 10px;
-            background: #333;
-            border-radius: 8px;
+        a:hover {
+            text-decoration: underline;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            margin: 18px 0;
         }
     </style>
 </head>
 <body>
+<div class="container">
+    <h1>파일 셔틀 🚀</h1>
+    <p>업로드하려면 비밀번호 <b>Philia096</b> 를 입력해야 합니다.</p>
 
-    <h1>파일 업로드 / 다운로드</h1>
-
-    <div class="upload-box">
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" required>
-            <button type="submit">업로드</button>
-        </form>
+    <div class="messages">
+        {% for msg in get_flashed_messages() %}
+            <p>{{ msg }}</p>
+        {% endfor %}
     </div>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label>업로드 비밀번호</label>
+        <input type="password" name="password" placeholder="비밀번호 입력" required>
+
+        <label>파일 선택</label>
+        <input type="file" name="file" required>
+
+        <button type="submit">업로드</button>
+    </form>
+
+    <hr>
 
     <div class="file-list">
         <h2>업로드된 파일 목록</h2>
-
         {% if files %}
             {% for f in files %}
                 <div class="file-item">
-                    {{ f.original_name }}  
+                    {{ f.original_name }}
                     ─ <a href="/download/{{ f.stored_name }}">다운로드</a>
                 </div>
             {% endfor %}
         {% else %}
-            <p>아직 파일이 없습니다.</p>
+            <p>아직 업로드된 파일이 없습니다.</p>
         {% endif %}
     </div>
-
+</div>
 </body>
 </html>
