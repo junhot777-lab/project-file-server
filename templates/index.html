@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>파일 업로드 / 다운로드</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: #fff;
+            margin: 0;
+            padding: 30px;
+        }
+        h1 { color: #4ad3ff; }
+        .upload-box {
+            padding: 20px;
+            background: #222;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+        .file-list {
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        a {
+            color: #4ad3ff;
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        .file-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #333;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>파일 업로드 / 다운로드</h1>
+
+    <div class="upload-box">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit">업로드</button>
+        </form>
+    </div>
+
+    <div class="file-list">
+        <h2>업로드된 파일 목록</h2>
+
+        {% if files %}
+            {% for f in files %}
+                <div class="file-item">
+                    {{ f.original_name }}  
+                    ─ <a href="/download/{{ f.stored_name }}">다운로드</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>아직 파일이 없습니다.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
