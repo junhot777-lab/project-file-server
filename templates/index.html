@@ -47,15 +47,9 @@
         button:hover {
             background: #ffc94d;
         }
-        .messages {
-            margin-bottom: 10px;
-        }
         .messages p {
             margin: 4px 0;
             font-size: 14px;
-        }
-        .file-list {
-            margin-top: 25px;
         }
         .file-item {
             background: rgba(255, 255, 255, 0.08);
@@ -73,7 +67,7 @@
         }
         hr {
             border: none;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: 1px solid rgba(255,255,255,0.15);
             margin: 18px 0;
         }
     </style>
@@ -81,7 +75,6 @@
 <body>
 <div class="container">
     <h1>파일 셔틀 🚀</h1>
-    <p>업로드하려면 비밀번호 <b>Philia096</b> 를 입력해야 합니다.</p>
 
     <div class="messages">
         {% for msg in get_flashed_messages() %}
@@ -90,6 +83,7 @@
     </div>
 
     <form action="/upload" method="post" enctype="multipart/form-data">
+
         <label>업로드 비밀번호</label>
         <input type="password" name="password" placeholder="비밀번호 입력" required>
 
@@ -101,19 +95,17 @@
 
     <hr>
 
-    <div class="file-list">
-        <h2>업로드된 파일 목록</h2>
-        {% if files %}
-            {% for f in files %}
-                <div class="file-item">
-                    {{ f.original_name }}
-                    ─ <a href="/download/{{ f.stored_name }}">다운로드</a>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>아직 업로드된 파일이 없습니다.</p>
-        {% endif %}
-    </div>
+    <h2>업로드된 파일 목록</h2>
+    {% if files %}
+        {% for f in files %}
+            <div class="file-item">
+                {{ f.original_name }}
+                ─ <a href="/download/{{ f.stored_name }}">다운로드</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>아직 업로드된 파일이 없습니다.</p>
+    {% endif %}
 </div>
 </body>
 </html>
